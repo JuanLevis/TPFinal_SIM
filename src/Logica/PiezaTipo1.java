@@ -2,13 +2,18 @@ package Logica;
 
 public class PiezaTipo1 extends Pieza {
 
-    public PiezaTipo1(){
-        super();
+    public PiezaTipo1(double tiempoActual){
+        super(tiempoActual);
+        calcularTiempoMecanizado();
     }
 
     @Override
     public double calcularTiempoMecanizado() {
-        return 0;
+        double rnd1 = Math.random();
+        double rnd2 = Math.random();
+        double z = Math.sqrt(-2*Math.log(rnd1)*Math.cos(2*Math.PI*rnd2));
+        double tiempo = 150 + (z*2);
+        return (tiempo / 60)*3600;
     }
 
 
