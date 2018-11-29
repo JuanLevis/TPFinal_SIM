@@ -4,7 +4,7 @@ public class PiezaTipo1 extends Pieza {
 
     public PiezaTipo1(double tiempoActual){
         super(tiempoActual);
-        calcularTiempoMecanizado();
+        this.tiempoMecanizado = calcularTiempoMecanizado();
     }
 
     @Override

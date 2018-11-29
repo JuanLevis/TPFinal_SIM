@@ -2,6 +2,7 @@ package Logica;
 
 public abstract class Pieza {
     private double horaLlegada;
+    protected double tiempoMecanizado;
     private int numeroPieza = 0;
 
     public Pieza(double tiempoActual){

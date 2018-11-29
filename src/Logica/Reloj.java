@@ -33,4 +33,19 @@ public class Reloj {
 
         return ceroH + horas + ":"  + ceroM + minutos + ":" + ceroS + segundos;
     }
+
+    public static String tiempoString(double tiempo) {
+
+        tiempo = (long) tiempo;
+        long horas = (long) tiempo / 3600;
+        long minutos = (long) (tiempo - horas * 3600) / 60;
+        long segundos = (long) (tiempo - (horas * 3600 + minutos * 60));
+        String ceroH = "", ceroM = "", ceroS = "";
+        if (horas < 10) ceroH = "0";
+        if (minutos < 10) ceroM = "0";
+        if (segundos < 10) ceroS = "0";
+        horas = horas % 24;
+
+        return ceroH + String.valueOf(horas) + ":" + ceroM + String.valueOf(minutos) + ":" + ceroS + String.valueOf(segundos);
+    }
 }
