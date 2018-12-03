@@ -17,6 +17,38 @@ public class LlegadaPieza implements Evento{
         calcularProxLlegadaPieza();
     }
 
+    public Pieza getNuevaPieza() {
+        return nuevaPieza;
+    }
+
+    public void setNuevaPieza(Pieza nuevaPieza) {
+        this.nuevaPieza = nuevaPieza;
+    }
+
+    public double getRandomLlegada() {
+        return randomLlegada;
+    }
+
+    public void setRandomLlegada(double randomLlegada) {
+        this.randomLlegada = randomLlegada;
+    }
+
+    public double getTiempoLlegada() {
+        return tiempoLlegada;
+    }
+
+    public void setTiempoLlegada(double tiempoLlegada) {
+        this.tiempoLlegada = tiempoLlegada;
+    }
+
+    public double getProxLlegadaPieza() {
+        return proxLlegadaPieza;
+    }
+
+    public void setProxLlegadaPieza(double proxLlegadaPieza) {
+        this.proxLlegadaPieza = proxLlegadaPieza;
+    }
+
     public Pieza generarPieza(double random, double tiempoActual){
         if(ColaLlegadaPieza.getInstancia().getCola().size() > 0){
             return ColaLlegadaPieza.getInstancia().getCola().get(0);
@@ -53,5 +85,10 @@ public class LlegadaPieza implements Evento{
             tornoControl2.addPiezaAlimentador(nuevaPieza);
             this.nuevaPieza = null;
         }
+    }
+
+    @Override
+    public String getNombre() {
+        return "Llegada Pieza";
     }
 }

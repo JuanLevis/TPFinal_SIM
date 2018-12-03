@@ -1,8 +1,68 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="sample.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <top>
+        <MenuBar prefHeight="29.0" prefWidth="661.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Close" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <HBox prefHeight="100.0" prefWidth="200.0" stylesheets="@table-view.css" BorderPane.alignment="CENTER">
+            <children>
+                <TableView fx:id="tvSim" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="370.0" prefWidth="688.0" HBox.hgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="dia" prefWidth="50.0" text="Dia" />
+                        <TableColumn fx:id="reloj" prefWidth="75.0" text="Reloj" />
+                        <TableColumn fx:id="event" prefWidth="100.0" text="Evento" />
+                        <TableColumn fx:id="pieza" prefWidth="50.0" text="Pieza" />
+                        <TableColumn fx:id="rnd1" prefWidth="75.0" text="RND" />
+                        <TableColumn fx:id="tiempoEntreLlegadas" prefWidth="75.0" text="T.Entre Llegadas" />
+                        <TableColumn fx:id="proxFinAtencion" prefWidth="75.0" text="Proximo Fin Atencion" />
+                        <TableColumn fx:id="colaLlegadaPiezas" prefWidth="75.0" text="Cola Llegada" />
+                        <TableColumn fx:id="estadoTorno1" prefWidth="75.0" text="Estado Torno 1" />
+                        <TableColumn fx:id="alimentadorTorno1_1" prefWidth="75.0" text="Alim. Slot 1" />
+                        <TableColumn fx:id="alimentadorTorno1_2" prefWidth="75.0" text="Alim. Slot 2" />
+                        <TableColumn fx:id="alimentadorTorno1_3" prefWidth="75.0" text="Alim. Slot 3" />
+                        <TableColumn fx:id="rndTorno1" prefWidth="75.0" text="RND" />
+                        <TableColumn fx:id="tiempoMecanizadoTorno1" prefWidth="75.0" text="Tiempo Mecanizado" />
+                        <TableColumn fx:id="proxFinAtencionTorno1" prefWidth="75.0" text="Proximo Fin Atencion" />
+                        <TableColumn fx:id="estadoTorno2" prefWidth="75.0" text="Estado Torno 2" />
+                        <TableColumn fx:id="alimentadorTorno2_1" prefWidth="75.0" text="Alim. Slot 1" />
+                        <TableColumn fx:id="alimentadorTorno2_2" prefWidth="75.0" text="Alim. Slot 2" />
+                        <TableColumn fx:id="alimentadorTorno2_3" prefWidth="75.0" text="Alim. Slot 3" />
+                        <TableColumn fx:id="rndTorno2" prefWidth="75.0" text="RND" />
+                        <TableColumn fx:id="tiempoMecanizadoTorno2" prefWidth="75.0" text="Tiempo Mecanizado" />
+                        <TableColumn fx:id="proxFinAtencionTorno2" prefWidth="75.0" text="Proximo Fin Atencion" />
+                    </columns>
+                </TableView>
+            </children>
+        </HBox>
+    </center>
+    <bottom>
+        <AnchorPane fx:id="anchorPane" prefHeight="82.0" prefWidth="593.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="900.0" layoutY="43.0" mnemonicParsing="false" text="Simular" />
+            <TextField fx:id="txtDiasASimular" layoutX="845.0" layoutY="43.0" prefHeight="25.0" prefWidth="45.0" />
+            <Label layoutX="653.0" layoutY="47.0" text="Cantidad de dias a simular:" />
+         </children>
+        </AnchorPane>
+    </bottom>
+</BorderPane>

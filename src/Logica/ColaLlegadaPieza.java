@@ -13,6 +13,10 @@ public class ColaLlegadaPieza{
         return instancia;
     }
 
+    public ColaLlegadaPieza(){
+        cola = new ArrayList<Pieza>();
+    }
+
     public ArrayList<Pieza> getCola() {
         return cola;
     }

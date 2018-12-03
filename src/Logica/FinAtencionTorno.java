@@ -23,4 +23,9 @@ public class FinAtencionTorno implements Evento {
         }
 
     }
+
+    @Override
+    public String getNombre() {
+        return "Fin At. Torno " + tornoFinalizado.getNumero();
+    }
 }

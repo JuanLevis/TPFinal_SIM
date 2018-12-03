@@ -11,6 +11,10 @@ public class Reloj {
         return instancia;
     }
 
+    public Reloj(){
+        setTiempoActual(0);
+    }
+
     public double getTiempoActual() {
         return tiempoActual;
     }
