@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import java.net.URL;
@@ -25,6 +26,8 @@ public class Controller implements Initializable {
         this.tvSim = new TableView<Fila>();
     }
 
+    @FXML
+    private Button btnSimular;
     @FXML
     private TextField txtDiasASimular;
     @FXML
@@ -86,6 +89,13 @@ public class Controller implements Initializable {
         } else {
             gestor.setDiasSimulacion(Integer.valueOf(txtDiasASimular.getText()));
         }
+    }
+
+    @FXML
+    void simulacionOnAction(ActionEvent event) {
+        this.gestor.cargarFilaPrimeravez();
+        //this.initializeNewSimulation(true);
+        //this.setStats();
     }
 
 

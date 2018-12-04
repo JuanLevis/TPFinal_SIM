@@ -12,7 +12,7 @@ public class LlegadaPieza implements Evento{
         tornoControl1 = torno1;
         tornoControl2 = torno2;
         randomLlegada = Math.random();
-        nuevaPieza = generarPieza(randomLlegada, Reloj.getInstancia().getTiempoActual());
+        generarPieza(randomLlegada, Reloj.getInstancia().getTiempoActual());
         calcularLlegadaPieza();
         calcularProxLlegadaPieza();
     }
@@ -49,12 +49,12 @@ public class LlegadaPieza implements Evento{
         this.proxLlegadaPieza = proxLlegadaPieza;
     }
 
-    public Pieza generarPieza(double random, double tiempoActual){
+    public void generarPieza(double random, double tiempoActual){
         if(ColaLlegadaPieza.getInstancia().getCola().size() > 0){
-            return ColaLlegadaPieza.getInstancia().getCola().get(0);
+            nuevaPieza = ColaLlegadaPieza.getInstancia().getCola().get(0);
         }
         PiezaFactoryMethod factory = new PiezaFactory();
-        return factory.crearPieza(random, tiempoActual);
+        nuevaPieza = factory.crearPieza(random, tiempoActual);
     }
 
     public void calcularLlegadaPieza(){

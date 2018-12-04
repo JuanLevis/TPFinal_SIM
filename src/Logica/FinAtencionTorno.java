@@ -12,6 +12,9 @@ public class FinAtencionTorno implements Evento {
         if(tornoFinalizado.getAlimentador().size() > 0){
             if(tornoFinalizado.verificarUltimaPiezaTCN(tornoFinalizado.getAlimentador().get(0))){
                 tornoFinalizado.setPiezaActual(tornoFinalizado.getAlimentador().get(0));
+                tornoFinalizado.getAlimentador().remove(0);
+                tornoFinalizado.addPiezaAlimentador(ColaLlegadaPieza.getInstancia().getCola().get(0));
+                ColaLlegadaPieza.getInstancia().getCola().remove(0);
                 tornoFinalizado.setEstado(EstadoTCN.Ocupado);
             }
             else {

@@ -11,6 +11,7 @@ public class Gestor {
     private TCN TCN_1;
     private TCN TCN_2;
     private LlegadaPieza llegadaPieza;
+    private FinReprogramacion finReprogramacion;
     private int dia;
     private ObservableList<Fila> data;
     private ArrayList<String> conjuntoEventos;
@@ -98,15 +99,45 @@ public class Gestor {
         iterar();
     }
 
-    //TODO: Terminar los distintos eventos
+    //TODO: Falta ver el tema de la reprogramacion cuando queda Libre el torno
     public void iterar(){
         while ((Reloj.getInstancia().getTiempoActual()/3600) <= (diasSimulacion*24)){
             switch (proxEvento()){
                 case "LlegadaPieza":
+                    setEventoActual(llegadaPieza);
+                    getConjuntoEventos().add(getEventoActual().getNombre());
+                    Reloj.getInstancia().setTiempoActual(llegadaPieza.getProxLlegadaPieza());
+                    llegadaPieza.ejecutar();
+                    llegadaPieza.setRandomLlegada(Math.random());
+                    llegadaPieza.generarPieza(llegadaPieza.getRandomLlegada(), Reloj.getInstancia().getTiempoActual());
+                    llegadaPieza.calcularLlegadaPieza();
+                    llegadaPieza.calcularProxLlegadaPieza();
                     break;
                 case "FinAtTorno1":
+                    FinAtencionTorno finAtTorno1 = new FinAtencionTorno(TCN_1);
+                    setEventoActual(finAtTorno1);
+                    getConjuntoEventos().add(getEventoActual().getNombre());
+                    Reloj.getInstancia().setTiempoActual(calcularProxFinAtencionTorno(TCN_1));
+                    finAtTorno1.ejecutar();
+                    if(TCN_1.getEstado() == EstadoTCN.EnReprogramacion){
+                        finReprogramacion = new FinReprogramacion(TCN_1);
+                    }
                     break;
                 case "FinAtTorno2":
+                    FinAtencionTorno finAtTorno2 = new FinAtencionTorno(TCN_2);
+                    setEventoActual(finAtTorno2);
+                    getConjuntoEventos().add(getEventoActual().getNombre());
+                    Reloj.getInstancia().setTiempoActual(calcularProxFinAtencionTorno(TCN_2));
+                    finAtTorno2.ejecutar();
+                    if(TCN_2.getEstado() == EstadoTCN.EnReprogramacion){
+                        finReprogramacion = new FinReprogramacion(TCN_2);
+                    }
+                    break;
+                case "FinReprogramacion":
+                    setEventoActual(finReprogramacion);
+                    getConjuntoEventos().add(getEventoActual().getNombre());
+                    Reloj.getInstancia().setTiempoActual(finReprogramacion.getProxFinReprogramacion());
+                    finReprogramacion.ejecutar();
                     break;
             }
         }
@@ -129,6 +160,9 @@ public class Gestor {
         if(calcularProxFinAtencionTorno(TCN_2) != 0 && calcularProxFinAtencionTorno(TCN_2) < minTiempo){
             minTiempo = calcularProxFinAtencionTorno(TCN_2);
         }
+        if(finReprogramacion.getProxFinReprogramacion() != 0 && finReprogramacion.getProxFinReprogramacion() < minTiempo){
+            minTiempo = finReprogramacion.getProxFinReprogramacion();
+        }
 
         return minTiempo;
     }
@@ -140,7 +174,9 @@ public class Gestor {
             return "LlegadaPieza";
         } else if(tiempo == calcularProxFinAtencionTorno(TCN_1)){
             return "FinAtTorno1";
-        } else{
+        } else if(tiempo == finReprogramacion.getProxFinReprogramacion()){
+            return "FinReprogramacion";
+        } else {
             return "FinAtTorno2";
         }
     }

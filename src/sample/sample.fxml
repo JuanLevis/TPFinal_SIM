@@ -37,14 +37,14 @@
                         <TableColumn fx:id="tiempoEntreLlegadas" prefWidth="75.0" text="T.Entre Llegadas" />
                         <TableColumn fx:id="proxFinAtencion" prefWidth="75.0" text="Proximo Fin Atencion" />
                         <TableColumn fx:id="colaLlegadaPiezas" prefWidth="75.0" text="Cola Llegada" />
-                        <TableColumn fx:id="estadoTorno1" prefWidth="75.0" text="Estado Torno 1" />
+                        <TableColumn fx:id="estadoTorno1" prefWidth="95.0" text="Estado Torno 1" />
                         <TableColumn fx:id="alimentadorTorno1_1" prefWidth="75.0" text="Alim. Slot 1" />
                         <TableColumn fx:id="alimentadorTorno1_2" prefWidth="75.0" text="Alim. Slot 2" />
                         <TableColumn fx:id="alimentadorTorno1_3" prefWidth="75.0" text="Alim. Slot 3" />
                         <TableColumn fx:id="rndTorno1" prefWidth="75.0" text="RND" />
                         <TableColumn fx:id="tiempoMecanizadoTorno1" prefWidth="75.0" text="Tiempo Mecanizado" />
                         <TableColumn fx:id="proxFinAtencionTorno1" prefWidth="75.0" text="Proximo Fin Atencion" />
-                        <TableColumn fx:id="estadoTorno2" prefWidth="75.0" text="Estado Torno 2" />
+                        <TableColumn fx:id="estadoTorno2" prefWidth="95.0" text="Estado Torno 2" />
                         <TableColumn fx:id="alimentadorTorno2_1" prefWidth="75.0" text="Alim. Slot 1" />
                         <TableColumn fx:id="alimentadorTorno2_2" prefWidth="75.0" text="Alim. Slot 2" />
                         <TableColumn fx:id="alimentadorTorno2_3" prefWidth="75.0" text="Alim. Slot 3" />
@@ -59,7 +59,7 @@
     <bottom>
         <AnchorPane fx:id="anchorPane" prefHeight="82.0" prefWidth="593.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="900.0" layoutY="43.0" mnemonicParsing="false" text="Simular" />
+            <Button fx:id="btnSimular" layoutX="900.0" layoutY="43.0" mnemonicParsing="false" text="Simular" onAction="#simulacionOnAction" />
             <TextField fx:id="txtDiasASimular" layoutX="845.0" layoutY="43.0" prefHeight="25.0" prefWidth="45.0" />
             <Label layoutX="653.0" layoutY="47.0" text="Cantidad de dias a simular:" />
          </children>
