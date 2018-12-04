@@ -48,7 +48,6 @@
                         <TableColumn fx:id="alimentadorTorno2_1" prefWidth="75.0" text="Alim. Slot 1" />
                         <TableColumn fx:id="alimentadorTorno2_2" prefWidth="75.0" text="Alim. Slot 2" />
                         <TableColumn fx:id="alimentadorTorno2_3" prefWidth="75.0" text="Alim. Slot 3" />
-                        <TableColumn fx:id="rndTorno2" prefWidth="75.0" text="RND" />
                         <TableColumn fx:id="tiempoMecanizadoTorno2" prefWidth="75.0" text="Tiempo Mecanizado" />
                         <TableColumn fx:id="proxFinAtencionTorno2" prefWidth="75.0" text="Proximo Fin Atencion" />
                     </columns>

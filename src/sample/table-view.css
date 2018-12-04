@@ -14,10 +14,11 @@
 
 /* centrar y cambiar color de los titulos de columnas */
 .table-view .column-header .label{
-    -fx-text-fill: #808080;
+    -fx-text-fill: #4c4c4c;
     -fx-alignment: CENTER;
 }
 
-#event .column-body {
-	-fx-background-color: #ffa500;
+#event{
+	-fx-background-color: #ffcc99;
+	-fx-font-weight: bold;
 }

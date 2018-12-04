@@ -72,8 +72,6 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Fila, String> alimentadorTorno2_3;
     @FXML
-    private TableColumn<Fila, String> rndTorno2;
-    @FXML
     private TableColumn<Fila, String> tiempoMecanizadoTorno2;
     @FXML
     private TableColumn<Fila, String> proxFinAtencionTorno2;
@@ -147,7 +145,6 @@ public class Controller implements Initializable {
         alimentadorTorno2_1.setCellValueFactory(new PropertyValueFactory<>("alimentadorTorno2_1"));
         alimentadorTorno2_2.setCellValueFactory(new PropertyValueFactory<>("alimentadorTorno2_2"));
         alimentadorTorno2_3.setCellValueFactory(new PropertyValueFactory<>("alimentadorTorno2_3"));
-        rndTorno2.setCellValueFactory(new PropertyValueFactory<>("rndTorno2"));
         tiempoMecanizadoTorno2.setCellValueFactory(new PropertyValueFactory<>("tiempoMecanizadoTorno2"));
         proxFinAtencionTorno2.setCellValueFactory(new PropertyValueFactory<>("proxFinAtencionTorno2"));
     }

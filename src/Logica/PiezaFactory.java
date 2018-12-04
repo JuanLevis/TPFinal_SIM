@@ -11,7 +11,7 @@ public class PiezaFactory implements PiezaFactoryMethod {
         double minInterv3 = 0.61;
         double maxInterv3 = 1;
 
-        if(random > minInterv1 && random <= maxInterv1){
+        if(random >= minInterv1 && random <= maxInterv1){
             return new PiezaTipo1(tiempoActual);
         }
         else if(random >= minInterv2 && random <= maxInterv2){

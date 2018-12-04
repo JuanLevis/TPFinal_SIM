@@ -22,11 +22,10 @@ public class Fila {
     private final SimpleStringProperty alimentadorTorno2_1;
     private final SimpleStringProperty alimentadorTorno2_2;
     private final SimpleStringProperty alimentadorTorno2_3;
-    private final SimpleStringProperty rndTorno2;
     private final SimpleStringProperty tiempoMecanizadoTorno2;
     private final SimpleStringProperty proxFinAtencionTorno2;
 
-    public Fila(String dia, String reloj, String event, String pieza, String rnd1, String tiempoEntreLlegadas, String proxFinAtencion, String colaLlegadaPiezas, String estadoTorno1, String alimentadorTorno1_1, String alimentadorTorno1_2, String alimentadorTorno1_3, String rndTorno1, String tiempoMecanizadoTorno1, String proxFinAtencionTorno1, String estadoTorno2, String alimentadorTorno2_1, String alimentadorTorno2_2, String alimentadorTorno2_3, String rndTorno2, String tiempoMecanizadoTorno2, String proxFinAtencionTorno2) {
+    public Fila(String dia, String reloj, String event, String pieza, String rnd1, String tiempoEntreLlegadas, String proxFinAtencion, String colaLlegadaPiezas, String estadoTorno1, String alimentadorTorno1_1, String alimentadorTorno1_2, String alimentadorTorno1_3, String rndTorno1, String tiempoMecanizadoTorno1, String proxFinAtencionTorno1, String estadoTorno2, String alimentadorTorno2_1, String alimentadorTorno2_2, String alimentadorTorno2_3, String tiempoMecanizadoTorno2, String proxFinAtencionTorno2) {
         this.dia = new SimpleStringProperty(dia);
         this.reloj = new SimpleStringProperty(reloj);
         this.event = new SimpleStringProperty(event);
@@ -46,7 +45,6 @@ public class Fila {
         this.alimentadorTorno2_1 = new SimpleStringProperty(alimentadorTorno2_1);
         this.alimentadorTorno2_2 = new SimpleStringProperty(alimentadorTorno2_2);
         this.alimentadorTorno2_3 = new SimpleStringProperty(alimentadorTorno2_3);
-        this.rndTorno2 = new SimpleStringProperty(rndTorno2);
         this.tiempoMecanizadoTorno2 = new SimpleStringProperty(tiempoMecanizadoTorno2);
         this.proxFinAtencionTorno2 = new SimpleStringProperty(proxFinAtencionTorno2);
     }
@@ -277,18 +275,6 @@ public class Fila {
 
     public void setAlimentadorTorno2_3(String alimentadorTorno2_3) {
         this.alimentadorTorno2_3.set(alimentadorTorno2_3);
-    }
-
-    public String getRndTorno2() {
-        return rndTorno2.get();
-    }
-
-    public SimpleStringProperty rndTorno2Property() {
-        return rndTorno2;
-    }
-
-    public void setRndTorno2(String rndTorno2) {
-        this.rndTorno2.set(rndTorno2);
     }
 
     public String getTiempoMecanizadoTorno2() {

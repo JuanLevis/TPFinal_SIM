@@ -96,6 +96,12 @@ public class Gestor {
         setEventoActual(llegadaPieza);
         getConjuntoEventos().add(getEventoActual().getNombre());
         Reloj.getInstancia().setTiempoActual(llegadaPieza.getProxLlegadaPieza());
+        llegadaPieza.ejecutar();
+        llegadaPieza.setRandomLlegada(Math.random());
+        llegadaPieza.generarPieza(llegadaPieza.getRandomLlegada(), Reloj.getInstancia().getTiempoActual());
+        llegadaPieza.calcularLlegadaPieza();
+        llegadaPieza.calcularProxLlegadaPieza();
+        cargarFila();
         iterar();
     }
 
@@ -112,40 +118,51 @@ public class Gestor {
                     llegadaPieza.generarPieza(llegadaPieza.getRandomLlegada(), Reloj.getInstancia().getTiempoActual());
                     llegadaPieza.calcularLlegadaPieza();
                     llegadaPieza.calcularProxLlegadaPieza();
+                    cargarFila();
                     break;
                 case "FinAtTorno1":
                     FinAtencionTorno finAtTorno1 = new FinAtencionTorno(TCN_1);
                     setEventoActual(finAtTorno1);
                     getConjuntoEventos().add(getEventoActual().getNombre());
-                    Reloj.getInstancia().setTiempoActual(calcularProxFinAtencionTorno(TCN_1));
+                    Reloj.getInstancia().setTiempoActual(getProxFinAtencionTorno(TCN_1));
                     finAtTorno1.ejecutar();
                     if(TCN_1.getEstado() == EstadoTCN.EnReprogramacion){
                         finReprogramacion = new FinReprogramacion(TCN_1);
                     }
+                    cargarFila();
                     break;
                 case "FinAtTorno2":
                     FinAtencionTorno finAtTorno2 = new FinAtencionTorno(TCN_2);
                     setEventoActual(finAtTorno2);
                     getConjuntoEventos().add(getEventoActual().getNombre());
-                    Reloj.getInstancia().setTiempoActual(calcularProxFinAtencionTorno(TCN_2));
+                    Reloj.getInstancia().setTiempoActual(getProxFinAtencionTorno(TCN_2));
                     finAtTorno2.ejecutar();
                     if(TCN_2.getEstado() == EstadoTCN.EnReprogramacion){
                         finReprogramacion = new FinReprogramacion(TCN_2);
                     }
+                    cargarFila();
                     break;
                 case "FinReprogramacion":
                     setEventoActual(finReprogramacion);
                     getConjuntoEventos().add(getEventoActual().getNombre());
                     Reloj.getInstancia().setTiempoActual(finReprogramacion.getProxFinReprogramacion());
                     finReprogramacion.ejecutar();
+                    finReprogramacion.setProxFinReprogramacion(0);
+                    cargarFila();
                     break;
             }
         }
 
     }
 
-    public double calcularProxFinAtencionTorno(TCN torno){
-        return torno.getPiezaActual().tiempoMecanizado + Reloj.getInstancia().getTiempoActual();
+    public double getProxFinAtencionTorno(TCN torno){
+        if(torno.getPiezaActual() != null){
+            return torno.getPiezaActual().proxFinMecanizado;
+        }
+        else{
+            return 0;
+        }
+
     }
 
     public double tiempoMinimo(){
@@ -154,13 +171,13 @@ public class Gestor {
         if(llegadaPieza.getProxLlegadaPieza() != 0 && llegadaPieza.getProxLlegadaPieza() < minTiempo){
             minTiempo = llegadaPieza.getProxLlegadaPieza();
         }
-        if(calcularProxFinAtencionTorno(TCN_1) != 0 && calcularProxFinAtencionTorno(TCN_1) < minTiempo){
-            minTiempo = calcularProxFinAtencionTorno(TCN_1);
+        if(getProxFinAtencionTorno(TCN_1) != 0 && getProxFinAtencionTorno(TCN_1) < minTiempo){
+            minTiempo = getProxFinAtencionTorno(TCN_1);
         }
-        if(calcularProxFinAtencionTorno(TCN_2) != 0 && calcularProxFinAtencionTorno(TCN_2) < minTiempo){
-            minTiempo = calcularProxFinAtencionTorno(TCN_2);
+        if(getProxFinAtencionTorno(TCN_2) != 0 && getProxFinAtencionTorno(TCN_2) < minTiempo){
+            minTiempo = getProxFinAtencionTorno(TCN_2);
         }
-        if(finReprogramacion.getProxFinReprogramacion() != 0 && finReprogramacion.getProxFinReprogramacion() < minTiempo){
+        if(finReprogramacion != null && finReprogramacion.getProxFinReprogramacion() != 0 && finReprogramacion.getProxFinReprogramacion() < minTiempo){
             minTiempo = finReprogramacion.getProxFinReprogramacion();
         }
 
@@ -172,9 +189,9 @@ public class Gestor {
 
         if(tiempo == llegadaPieza.getProxLlegadaPieza()){
             return "LlegadaPieza";
-        } else if(tiempo == calcularProxFinAtencionTorno(TCN_1)){
+        } else if(tiempo == getProxFinAtencionTorno(TCN_1)){
             return "FinAtTorno1";
-        } else if(tiempo == finReprogramacion.getProxFinReprogramacion()){
+        } else if(finReprogramacion != null && tiempo == finReprogramacion.getProxFinReprogramacion()){
             return "FinReprogramacion";
         } else {
             return "FinAtTorno2";
@@ -202,10 +219,35 @@ public class Gestor {
             String alimentadorTorno2_1Content = "-";
             String alimentadorTorno2_2Content = "-";
             String alimentadorTorno2_3Content = "-";
-            String rndTorno2Content = "-";
             String tiempoMecanizadoTorno2Content = "00:00:00";
             String proxFinAtencionTorno2Content = "00:00:00";
 
-            data.add(new Fila(diaContent, relojContent, eventContent, piezaContent, rnd1Content, tiempoEntreLlegadasContent, proxFinAtencionContent, colaLlegadaPiezasContent, estadoTorno1Content, alimentadorTorno1_1Content, alimentadorTorno1_2Content, alimentadorTorno1_3Content, rndTorno1Content, tiempoMecanizadoTorno1Content, proxFinAtencionTorno1Content, estadoTorno2Content, alimentadorTorno2_1Content, alimentadorTorno2_2Content, alimentadorTorno2_3Content, rndTorno2Content, tiempoMecanizadoTorno2Content, proxFinAtencionTorno2Content));
+            data.add(new Fila(diaContent, relojContent, eventContent, piezaContent, rnd1Content, tiempoEntreLlegadasContent, proxFinAtencionContent, colaLlegadaPiezasContent, estadoTorno1Content, alimentadorTorno1_1Content, alimentadorTorno1_2Content, alimentadorTorno1_3Content, rndTorno1Content, tiempoMecanizadoTorno1Content, proxFinAtencionTorno1Content, estadoTorno2Content, alimentadorTorno2_1Content, alimentadorTorno2_2Content, alimentadorTorno2_3Content, tiempoMecanizadoTorno2Content, proxFinAtencionTorno2Content));
+    }
+
+    public void cargarFila(){
+        String diaContent = String.valueOf(getDia());
+        String relojContent = Reloj.tiempoString();
+        String eventContent = eventoActual.getNombre();
+        String piezaContent = (llegadaPieza.getNuevaPieza() != null) ? String.valueOf(llegadaPieza.getNuevaPieza().getNumeroPieza()) : "-";
+        String rnd1Content = String.valueOf(llegadaPieza.getRandomLlegada());
+        String tiempoEntreLlegadasContent = Reloj.tiempoString(llegadaPieza.getTiempoLlegada());
+        String proxFinAtencionContent = Reloj.tiempoString(llegadaPieza.getProxLlegadaPieza());
+        String colaLlegadaPiezasContent = String.valueOf(ColaLlegadaPieza.getInstancia().getCola().size());
+        String estadoTorno1Content = TCN_1.getEstado().getName();
+        String alimentadorTorno1_1Content = (TCN_1.getAlimentador().size() > 0) ? String.valueOf(TCN_1.getAlimentador().get(0).getNumeroPieza()) : "-";
+        String alimentadorTorno1_2Content = (TCN_1.getAlimentador().size() > 1) ? String.valueOf(TCN_1.getAlimentador().get(1).getNumeroPieza()) : "-";
+        String alimentadorTorno1_3Content = (TCN_1.getAlimentador().size() > 2) ? String.valueOf(TCN_1.getAlimentador().get(2).getNumeroPieza()) : "-";
+        String rndTorno1Content = "-";
+        String tiempoMecanizadoTorno1Content = (TCN_1.getPiezaActual() != null) ? Reloj.tiempoString(TCN_1.getPiezaActual().tiempoMecanizado) : "-";
+        String proxFinAtencionTorno1Content = (TCN_1.getPiezaActual() != null) ? Reloj.tiempoString(getProxFinAtencionTorno(TCN_1)) : "-";
+        String estadoTorno2Content = TCN_2.getEstado().getName();
+        String alimentadorTorno2_1Content = (TCN_2.getAlimentador().size() > 0) ? String.valueOf(TCN_2.getAlimentador().get(0).getNumeroPieza()) : "-";
+        String alimentadorTorno2_2Content = (TCN_2.getAlimentador().size() > 1) ? String.valueOf(TCN_2.getAlimentador().get(1).getNumeroPieza()) : "-";
+        String alimentadorTorno2_3Content = (TCN_2.getAlimentador().size() > 2) ? String.valueOf(TCN_2.getAlimentador().get(2).getNumeroPieza()) : "-";
+        String tiempoMecanizadoTorno2Content = (TCN_2.getPiezaActual() != null) ? Reloj.tiempoString(TCN_2.getPiezaActual().tiempoMecanizado) : "-";
+        String proxFinAtencionTorno2Content = (TCN_2.getPiezaActual() != null) ? Reloj.tiempoString(getProxFinAtencionTorno(TCN_2)) : "-";
+
+        data.add(new Fila(diaContent, relojContent, eventContent, piezaContent, rnd1Content, tiempoEntreLlegadasContent, proxFinAtencionContent, colaLlegadaPiezasContent, estadoTorno1Content, alimentadorTorno1_1Content, alimentadorTorno1_2Content, alimentadorTorno1_3Content, rndTorno1Content, tiempoMecanizadoTorno1Content, proxFinAtencionTorno1Content, estadoTorno2Content, alimentadorTorno2_1Content, alimentadorTorno2_2Content, alimentadorTorno2_3Content, tiempoMecanizadoTorno2Content, proxFinAtencionTorno2Content));
     }
 }
