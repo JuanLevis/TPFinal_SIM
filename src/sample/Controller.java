@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import Logica.Gestor;
 import Logica.Reloj;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Controller implements Initializable {
     private ObservableList<Fila> data;
@@ -82,6 +83,10 @@ public class Controller implements Initializable {
         System.exit(0);
     }
 
+    private void clearItemsInTableView() {
+        tvSim.getItems().clear();
+    }
+
     public void setDiasSimulacion(){
         if (txtDiasASimular.getText() == null || txtDiasASimular.getText().trim().isEmpty()) {
             gestor.setDiasSimulacion(1);
@@ -91,16 +96,70 @@ public class Controller implements Initializable {
         }
     }
 
+    public void cargarTabla() {
+
+        this.gestor.inicio();
+
+        setearColumnas();
+
+        ObservableList<Fila> list = gestor.getData();
+
+        tvSim.setItems(list);
+    }
+
+    private void resetSimulation() {
+        //txAvgDurationService.setText("0");
+        //txCamionesNoAtendidos.setText("0");
+        //txCamionesTotales.setText("0");
+        //txCamionesXDia.setText("0");
+
+        //Reloj.resetearReloj();
+        this.gestor = new Gestor();
+        this.setDiasSimulacion();
+
+        clearItemsInTableView();
+
+        cargarTabla();
+    }
+
+    private void initializeNewSimulation() {
+
+        this.resetSimulation();
+    }
+
+    public void setearColumnas(){
+        dia.setCellValueFactory(new PropertyValueFactory<>("dia"));
+        reloj.setCellValueFactory(new PropertyValueFactory<>("reloj"));
+        event.setCellValueFactory(new PropertyValueFactory<>("event"));
+        pieza.setCellValueFactory(new PropertyValueFactory<>("pieza"));
+        rnd1.setCellValueFactory(new PropertyValueFactory<>("rnd1"));
+        tiempoEntreLlegadas.setCellValueFactory(new PropertyValueFactory<>("tiempoEntreLlegadas"));
+        proxFinAtencion.setCellValueFactory(new PropertyValueFactory<>("proxFinAtencion"));
+        colaLlegadaPiezas.setCellValueFactory(new PropertyValueFactory<>("colaLlegadaPiezas"));
+        estadoTorno1.setCellValueFactory(new PropertyValueFactory<>("estadoTorno1"));
+        alimentadorTorno1_1.setCellValueFactory(new PropertyValueFactory<>("alimentadorTorno1_1"));
+        alimentadorTorno1_2.setCellValueFactory(new PropertyValueFactory<>("alimentadorTorno1_2"));
+        alimentadorTorno1_3.setCellValueFactory(new PropertyValueFactory<>("alimentadorTorno1_3"));
+        rndTorno1.setCellValueFactory(new PropertyValueFactory<>("rndTorno1"));
+        tiempoMecanizadoTorno1.setCellValueFactory(new PropertyValueFactory<>("tiempoMecanizadoTorno1"));
+        proxFinAtencionTorno1.setCellValueFactory(new PropertyValueFactory<>("proxFinAtencionTorno1"));
+        estadoTorno2.setCellValueFactory(new PropertyValueFactory<>("estadoTorno2"));
+        alimentadorTorno2_1.setCellValueFactory(new PropertyValueFactory<>("alimentadorTorno2_1"));
+        alimentadorTorno2_2.setCellValueFactory(new PropertyValueFactory<>("alimentadorTorno2_2"));
+        alimentadorTorno2_3.setCellValueFactory(new PropertyValueFactory<>("alimentadorTorno2_3"));
+        rndTorno2.setCellValueFactory(new PropertyValueFactory<>("rndTorno2"));
+        tiempoMecanizadoTorno2.setCellValueFactory(new PropertyValueFactory<>("tiempoMecanizadoTorno2"));
+        proxFinAtencionTorno2.setCellValueFactory(new PropertyValueFactory<>("proxFinAtencionTorno2"));
+    }
+
     @FXML
     void simulacionOnAction(ActionEvent event) {
-        this.gestor.cargarFilaPrimeravez();
-        //this.initializeNewSimulation(true);
+        this.initializeNewSimulation();
         //this.setStats();
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 }
