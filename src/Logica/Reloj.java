@@ -52,4 +52,9 @@ public class Reloj {
 
         return ceroH + String.valueOf(horas) + ":" + ceroM + String.valueOf(minutos) + ":" + ceroS + String.valueOf(segundos);
     }
+
+    public static void resetearReloj()
+    {
+        instancia = null;
+    }
 }

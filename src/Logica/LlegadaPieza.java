@@ -66,7 +66,7 @@ public class LlegadaPieza implements Evento {
     }
 
     public void calcularLlegadaPieza() {
-        double demora = -((0.005 * Math.log(1 - randomLlegada)) * 3600);
+        double demora = -((0.3000003 * Math.log(1 - randomLlegada)) * 3600);
         tiempoLlegada = demora;
     }
 

@@ -19,4 +19,8 @@ public abstract class Pieza {
     public void setNumeroPieza(int numeroPieza) {
         this.numeroPieza = numeroPieza;
     }
+
+    public double getHoraLlegada() {
+        return horaLlegada;
+    }
 }

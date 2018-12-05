@@ -17,6 +17,10 @@ public class Gestor {
     private ArrayList<String> conjuntoEventos;
     private static Evento eventoActual;
     private int diasSimulacion;
+    private double esperaMaximaPieza;
+    private int filaActual;
+    private int filaDesde;
+    private int filaHasta;
 
     public Gestor(){
         this.conjuntoEventos = new ArrayList<String>();
@@ -25,6 +29,10 @@ public class Gestor {
         this.TCN_2 = new TCN(2);
         this.llegadaPieza = new LlegadaPieza(TCN_1, TCN_2);
         this.dia = 1;
+        this.esperaMaximaPieza = 0;
+        this.filaActual = 1;
+        this.filaDesde = 0;
+        this.filaHasta = 0;
     }
 
     public double getTiempoOcioso() {
@@ -91,23 +99,49 @@ public class Gestor {
         this.diasSimulacion = diasSimulacion;
     }
 
+    public int getFilaDesde() {
+        return filaDesde;
+    }
+
+    public void setFilaDesde(int filaDesde) {
+        this.filaDesde = filaDesde;
+    }
+
+    public int getFilaHasta() {
+        return filaHasta;
+    }
+
+    public void setFilaHasta(int filaHasta) {
+        this.filaHasta = filaHasta;
+    }
+
     public void inicio(){
         cargarFilaPrimeravez();
         setEventoActual(llegadaPieza);
         getConjuntoEventos().add(getEventoActual().getNombre());
         Reloj.getInstancia().setTiempoActual(llegadaPieza.getProxLlegadaPieza());
+        esperaMaximaPieza = Reloj.getInstancia().getTiempoActual() - llegadaPieza.getNuevaPieza().getHoraLlegada();
         llegadaPieza.ejecutar();
         llegadaPieza.setRandomLlegada(Math.random());
         llegadaPieza.generarPieza(llegadaPieza.getRandomLlegada(), Reloj.getInstancia().getTiempoActual());
         llegadaPieza.calcularLlegadaPieza();
         llegadaPieza.calcularProxLlegadaPieza();
-        cargarFila();
+        if(filaActual >= filaDesde && filaActual <= filaHasta){
+            cargarFila();
+        } else if(filaDesde == 0 && filaHasta == 0){
+            cargarFila();
+        }
+        filaActual++;
         iterar();
     }
 
-    //TODO: Falta ver el tema de la reprogramacion cuando queda Libre el torno
     public void iterar(){
+        int aux = 1;
         while ((Reloj.getInstancia().getTiempoActual()/3600) <= (diasSimulacion*24)){
+            if(((Reloj.getInstancia().getTiempoActual()/3600)/24) >= aux) {
+                dia++;
+                aux++;//Para mostrar correctamente los dias
+            }
             switch (proxEvento()){
                 case "LlegadaPieza":
                     setEventoActual(llegadaPieza);
@@ -118,7 +152,12 @@ public class Gestor {
                     llegadaPieza.generarPieza(llegadaPieza.getRandomLlegada(), Reloj.getInstancia().getTiempoActual());
                     llegadaPieza.calcularLlegadaPieza();
                     llegadaPieza.calcularProxLlegadaPieza();
-                    cargarFila();
+                    if(filaActual >= filaDesde && filaActual <= filaHasta){
+                        cargarFila();
+                    } else if(filaDesde == 0 && filaHasta == 0){
+                        cargarFila();
+                    }
+                    filaActual++;
                     break;
                 case "FinAtTorno1":
                     FinAtencionTorno finAtTorno1 = new FinAtencionTorno(TCN_1);
@@ -128,8 +167,15 @@ public class Gestor {
                     finAtTorno1.ejecutar();
                     if(TCN_1.getEstado() == EstadoTCN.EnReprogramacion){
                         finReprogramacion = new FinReprogramacion(TCN_1);
+                    } else if((Reloj.getInstancia().getTiempoActual() - TCN_1.getPiezaActual().getHoraLlegada()) > esperaMaximaPieza){
+                        esperaMaximaPieza = Reloj.getInstancia().getTiempoActual() - TCN_1.getPiezaActual().getHoraLlegada();
                     }
-                    cargarFila();
+                    if(filaActual >= filaDesde && filaActual <= filaHasta){
+                        cargarFila();
+                    } else if(filaDesde == 0 && filaHasta == 0){
+                        cargarFila();
+                    }
+                    filaActual++;
                     break;
                 case "FinAtTorno2":
                     FinAtencionTorno finAtTorno2 = new FinAtencionTorno(TCN_2);
@@ -137,18 +183,33 @@ public class Gestor {
                     getConjuntoEventos().add(getEventoActual().getNombre());
                     Reloj.getInstancia().setTiempoActual(getProxFinAtencionTorno(TCN_2));
                     finAtTorno2.ejecutar();
-                    if(TCN_2.getEstado() == EstadoTCN.EnReprogramacion){
+                    if (TCN_2.getEstado() == EstadoTCN.EnReprogramacion){
                         finReprogramacion = new FinReprogramacion(TCN_2);
+                    } else if((Reloj.getInstancia().getTiempoActual() - TCN_2.getPiezaActual().getHoraLlegada()) > esperaMaximaPieza){
+                        esperaMaximaPieza = Reloj.getInstancia().getTiempoActual() - TCN_2.getPiezaActual().getHoraLlegada();
                     }
-                    cargarFila();
+                    if(filaActual >= filaDesde && filaActual <= filaHasta){
+                        cargarFila();
+                    } else if(filaDesde == 0 && filaHasta == 0){
+                        cargarFila();
+                    }
+                    filaActual++;
                     break;
                 case "FinReprogramacion":
                     setEventoActual(finReprogramacion);
                     getConjuntoEventos().add(getEventoActual().getNombre());
                     Reloj.getInstancia().setTiempoActual(finReprogramacion.getProxFinReprogramacion());
                     finReprogramacion.ejecutar();
+                    if((Reloj.getInstancia().getTiempoActual() - finReprogramacion.getTornoFinalizado().getPiezaActual().getHoraLlegada()) > esperaMaximaPieza){
+                        esperaMaximaPieza = Reloj.getInstancia().getTiempoActual() - finReprogramacion.getTornoFinalizado().getPiezaActual().getHoraLlegada();
+                    }
                     finReprogramacion.setProxFinReprogramacion(0);
-                    cargarFila();
+                    if(filaActual >= filaDesde && filaActual <= filaHasta){
+                        cargarFila();
+                    } else if(filaDesde == 0 && filaHasta == 0){
+                        cargarFila();
+                    }
+                    filaActual++;
                     break;
             }
         }
@@ -250,4 +311,8 @@ public class Gestor {
 
         data.add(new Fila(diaContent, relojContent, eventContent, piezaContent, rnd1Content, tiempoEntreLlegadasContent, proxFinAtencionContent, colaLlegadaPiezasContent, estadoTorno1Content, alimentadorTorno1_1Content, alimentadorTorno1_2Content, alimentadorTorno1_3Content, rndTorno1Content, tiempoMecanizadoTorno1Content, proxFinAtencionTorno1Content, estadoTorno2Content, alimentadorTorno2_1Content, alimentadorTorno2_2Content, alimentadorTorno2_3Content, tiempoMecanizadoTorno2Content, proxFinAtencionTorno2Content));
     }
+
+    public String setTiempoOcioso1() {return String.valueOf(""); }
+    public String setTiempoOcioso2() {return String.valueOf(""); }
+    public String setEsperaMaxima() {return Reloj.tiempoString(esperaMaximaPieza); }
 }

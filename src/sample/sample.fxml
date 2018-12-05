@@ -11,8 +11,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <top>
         <MenuBar prefHeight="29.0" prefWidth="661.0">
             <menus>
@@ -29,10 +30,10 @@
             <children>
                 <TableView fx:id="tvSim" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="370.0" prefWidth="688.0" HBox.hgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="dia" prefWidth="50.0" text="Dia" />
+                        <TableColumn fx:id="dia" prefWidth="40.0" text="Dia" />
                         <TableColumn fx:id="reloj" prefWidth="75.0" text="Reloj" />
-                        <TableColumn fx:id="event" prefWidth="100.0" text="Evento" />
-                        <TableColumn fx:id="pieza" prefWidth="50.0" text="Pieza" />
+                        <TableColumn fx:id="event" prefWidth="135.0" text="Evento" />
+                        <TableColumn fx:id="pieza" prefWidth="40.0" text="Pieza" />
                         <TableColumn fx:id="rnd1" prefWidth="75.0" text="RND" />
                         <TableColumn fx:id="tiempoEntreLlegadas" prefWidth="75.0" text="T.Entre Llegadas" />
                         <TableColumn fx:id="proxFinAtencion" prefWidth="75.0" text="Proximo Fin Atencion" />
@@ -58,9 +59,32 @@
     <bottom>
         <AnchorPane fx:id="anchorPane" prefHeight="82.0" prefWidth="593.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnSimular" layoutX="900.0" layoutY="43.0" mnemonicParsing="false" text="Simular" onAction="#simulacionOnAction" />
-            <TextField fx:id="txtDiasASimular" layoutX="845.0" layoutY="43.0" prefHeight="25.0" prefWidth="45.0" />
-            <Label layoutX="653.0" layoutY="47.0" text="Cantidad de dias a simular:" />
+            <Button fx:id="btnSimular" layoutX="1296.0" layoutY="20.0" mnemonicParsing="false" onAction="#simulacionOnAction" text="Simular" />
+            <TextField fx:id="txtDiasASimular" layoutX="1176.0" layoutY="20.0" prefHeight="25.0" prefWidth="45.0" />
+            <Label layoutX="1023.0" layoutY="24.0" text="Cantidad de dias a simular:" />
+            <Label layoutX="86.0" layoutY="6.0" text="Tiempo Ocioso" />
+            <Label layoutX="44.0" layoutY="27.0" text="Torno 1" />
+            <Label layoutX="166.0" layoutY="27.0" text="Torno 2" />
+            <Label fx:id="txtOcioso_1" layoutX="41.0" layoutY="48.0" text="00:00:00">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="txtOcioso_2" layoutX="163.0" layoutY="48.0" text="00:00:00">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="319.0" layoutY="6.0" text="Tiempo Maximo de espera (Piezas)" />
+            <Label fx:id="txtEsperaMaxima" layoutX="387.0" layoutY="27.0" text="00:00:00">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="595.0" layoutY="7.0" text="Mostrar desde fila: " />
+            <Label layoutX="643.0" layoutY="36.0" text="hasta fila: " />
+            <TextField fx:id="txtFilaDesde" layoutX="700.0" layoutY="3.0" prefHeight="25.0" prefWidth="44.0" />
+            <TextField fx:id="txtFilaHasta" layoutX="700.0" layoutY="32.0" prefHeight="25.0" prefWidth="44.0" />
          </children>
         </AnchorPane>
     </bottom>

@@ -5,14 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import Logica.Gestor;
 import Logica.Reloj;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Controller implements Initializable {
@@ -20,7 +18,6 @@ public class Controller implements Initializable {
     private Gestor gestor;
     private Reloj reloj1;
 
-    //TODO: Consultar a Lupo sobre los labels que faltan y la tabla sin scroll
     public Controller() {
         this.gestor = new Gestor();
         this.reloj1 = Reloj.getInstancia();
@@ -31,6 +28,16 @@ public class Controller implements Initializable {
     private Button btnSimular;
     @FXML
     private TextField txtDiasASimular;
+    @FXML
+    private Label txtOcioso_1;
+    @FXML
+    private Label txtOcioso_2;
+    @FXML
+    private Label txtEsperaMaxima;
+    @FXML
+    private TextField txtFilaDesde;
+    @FXML
+    private TextField txtFilaHasta;
     @FXML
     private TableView<Fila> tvSim;
     @FXML
@@ -94,6 +101,16 @@ public class Controller implements Initializable {
         }
     }
 
+    public void setFilasMostrar(){
+        if(txtFilaDesde.getText() == null || txtFilaDesde.getText().trim().isEmpty()){
+            gestor.setFilaDesde(0);
+            gestor.setFilaHasta(0);
+        } else {
+            gestor.setFilaDesde(Integer.valueOf(txtFilaDesde.getText()));
+            gestor.setFilaHasta(Integer.valueOf(txtFilaHasta.getText()));
+        }
+    }
+
     public void cargarTabla() {
 
         this.gestor.inicio();
@@ -106,14 +123,10 @@ public class Controller implements Initializable {
     }
 
     private void resetSimulation() {
-        //txAvgDurationService.setText("0");
-        //txCamionesNoAtendidos.setText("0");
-        //txCamionesTotales.setText("0");
-        //txCamionesXDia.setText("0");
-
-        //Reloj.resetearReloj();
+        Reloj.resetearReloj();
         this.gestor = new Gestor();
         this.setDiasSimulacion();
+        this.setFilasMostrar();
 
         clearItemsInTableView();
 
@@ -152,7 +165,13 @@ public class Controller implements Initializable {
     @FXML
     void simulacionOnAction(ActionEvent event) {
         this.initializeNewSimulation();
-        //this.setStats();
+        this.setStats();
+    }
+
+    private void setStats(){
+        txtOcioso_1.setText(gestor.setTiempoOcioso1());
+        txtOcioso_2.setText(gestor.setTiempoOcioso2());
+        txtEsperaMaxima.setText(gestor.setEsperaMaxima());
     }
 
 

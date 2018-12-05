@@ -17,6 +17,14 @@ public class FinReprogramacion implements Evento {
         this.proxFinReprogramacion = proxFinReprogramacion;
     }
 
+    public TCN getTornoFinalizado() {
+        return tornoFinalizado;
+    }
+
+    public void setTornoFinalizado(TCN tornoFinalizado) {
+        this.tornoFinalizado = tornoFinalizado;
+    }
+
     @Override
     public void ejecutar() {
         tornoFinalizado.setPiezaActual(tornoFinalizado.getAlimentador().get(0));
